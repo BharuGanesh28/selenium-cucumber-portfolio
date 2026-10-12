@@ -27,4 +27,4 @@ jobs:
         uses: browser-actions/setup-chrome@v1
 
       - name: Run Selenium tests
-        run: xvfb-run -a mvn -B clean test
+        run: xvfb-run -a mvn -B -e clean test
