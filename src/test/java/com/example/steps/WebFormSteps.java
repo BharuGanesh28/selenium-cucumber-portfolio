@@ -1,6 +1,8 @@
 
 package com.example.steps;
 
+import io.cucumber.java.Scenario;
+import org.openqa.selenium.OutputType;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
@@ -45,9 +47,16 @@ public class WebFormSteps {
     }
 
     @After
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
+public void tearDown(Scenario scenario) {
+    if (driver != null) {
+        if (scenario.isFailed()) {
+            byte[] screenshot = ((org.openqa.selenium.TakesScreenshot) driver)
+                    .getScreenshotAs(OutputType.BYTES);
+
+            scenario.attach(screenshot, "image/png", "Failure Screenshot");
         }
+
+        driver.quit();
     }
+}
 }
